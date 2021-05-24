@@ -92,7 +92,8 @@ include("arraytypes/arraytypes.jl")
 include("eltypes.jl")
 include("table.jl")
 include("write.jl")
-include("cinterface.jl")
+include("append.jl")
+include("CDataInterface/CDataInterface.jl")
 
 const LZ4_FRAME_COMPRESSOR = LZ4FrameCompressor[]
 const ZSTD_COMPRESSOR = ZstdCompressor[]
@@ -106,6 +107,7 @@ function __init__()
         CodecLz4.TranscodingStreams.initialize(lz4)
         push!(LZ4_FRAME_COMPRESSOR, lz4)
     end
+    OBJ_METADATA_LOCK[] = ReentrantLock()
     return
 end
 
